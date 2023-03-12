@@ -10,8 +10,6 @@ function between($val, $x, $y){
 
 if(isset($_POST['reserv-submit'])) {
 
-require 'base.php';
-
     $user= $_SESSION['user_id'];
     $fname= $_POST['fname'];
     $lname= $_POST['lname'];
