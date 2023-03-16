@@ -17,31 +17,7 @@ require "header.php";
 if(isset($_SESSION['firstname'])){
     echo '<p class="text-white bg-dark text-center">Welcome '. $_SESSION['firstname'] .', Create your reservation here!</p>';
       
-  //error handling:
-    
-    // if(isset($_GET['error3'])){
-    //     if($_GET['error3'] == "emptyfields") {   //douleuei bazw ta errors apo ta headers.. prp na bgalw to requiered
-    //         echo '<h5 class="bg-danger text-center">Fill all fields, Please try again!</h5>';
-    //     }
-    //     else if($_GET['error3'] == "invalidfname") {   
-    //         echo '<h5 class="bg-danger text-center">Invalid First Name, Please try again!</h5>';
-    //     }
-    //     else if($_GET['error3'] == "invalidlname") {   
-    //         echo '<h5 class="bg-danger text-center">Invalid Last Name, Please try again!</h5>';
-    //     }
-    //     else if($_GET['error3'] == "invalidtele") {   
-    //         echo '<h5 class="bg-danger text-center">Invalid Telephone, Pleast try again!</h5>';
-    //     }
-    //     else if($_GET['error3'] == "invalidcomment") {   
-    //         echo '<h5 class="bg-danger text-center">Invalid Comment, Pleast try again!</h5>';
-    //     }
-    //     else if($_GET['error3'] == "invalidguests") {   
-    //         echo '<h5 class="bg-danger text-center">Invalid Guests, Pleast try again!</h5>';
-    //     }
-    //     else if($_GET['error3'] == "full") {   
-    //         echo '<h5 class="bg-danger text-center">Reservations are full this date and timezone, Please try again!</h5>';
-    //     }
-    // }
+  
         if(isset($_GET['reservation'])) {   
            if($_GET['reservation'] == "success"){ 
             echo '<h5 class="bg-success text-center">Your reservation was successfull!</h5>';

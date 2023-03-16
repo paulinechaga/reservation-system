@@ -1,5 +1,5 @@
 <?php
-
+include('base.php');
 session_start();
 
 //between function.. elenxei an oi xaraktires einai mesa sta oria p thetoume
@@ -7,12 +7,18 @@ function between($val, $x, $y){
     $val_len = strlen($val);
     return ($val_len >= $x && $val_len <= $y)?TRUE:FALSE;
 }
+    $fname= '';
+    $lname= '';
+    $date= '';
+    $time= '';
+    $guests= '';
+    $tele = '';
+    $comments = '';
 
 if(isset($_POST['reserv-submit'])) {
 
-    $user= $_SESSION['user_id'];
     $fname= $_POST['fname'];
-    $lname= $_POST['lname'];
+    $lname= $_POST['surname'];
     $date= $_POST['date'];
     $time= $_POST['time'];
     $guests= $_POST['num_guests'];
@@ -28,34 +34,34 @@ if(isset($_POST['reserv-submit'])) {
     
     
     if(empty($fname) || empty($lname) || empty($date) || empty($time) || empty($guests) || empty($tele)) {
-        header("Location: ../reservation.php?error3=emptyfields");
+        echo '<h5 class="bg-danger text-center">Fill all fields, Please try again!</h5>';
         exit();
     }
         else if(!preg_match("/^[a-zA-Z ]*$/", $fname) || !between($fname,2,20)) {
-        header("Location: ../reservation.php?error3=invalidfname");
+            echo '<h5 class="bg-danger text-center">Invalid First Name, Please try again!</h5>';
         exit();
     }
         else if(!preg_match("/^[a-zA-Z ]*$/", $lname) || !between($lname,2,40)) {
-        header("Location: ../reservation.php?error3=invalidlname");
+            echo '<h5 class="bg-danger text-center">Invalid Last Name, Please try again!</h5>';
         exit();
     }
         else if(!preg_match("/^[0-9]*$/", $guests) || !between($guests,1,3)) {
-        header("Location: ../reservation.php?error3=invalidguests");
+            echo '<h5 class="bg-danger text-center">Invalid Guests, Pleast try again!</h5>';
         exit();
     }
         else if(!preg_match("/^[a-zA-Z0-9]*$/", $tele) || !between($tele,6,20)) {
-        header("Location: ../reservation.php?error3=invalidtele");
+            echo '<h5 class="bg-danger text-center">Invalid Telephone, Pleast try again!</h5>';
         exit();
     }    
-        else if(!preg_match("/^[a-zA-Z 0-9]*$/", $comments) || !between($comment,0,200)) {
-        header("Location: ../reservation.php?error3=invalidcomment");
+        else if(!preg_match("/^[a-zA-Z 0-9]*$/", $comments) || !between($comments,0,200)) {
+            echo '<h5 class="bg-danger text-center">Invalid Comment, Pleast try again!</h5>';
         exit();
     }
     
     else{
      //checkarw ta available trapezia ana mera   
     $sql = "SELECT t_tables FROM tables WHERE t_date='$date'";
-    $result = $dbconnect->query($sql);
+    $result=mysqli_query($dbconnect,$sql);
     if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $a_tables=$row["t_tables"];
@@ -67,14 +73,14 @@ if(isset($_POST['reserv-submit'])) {
     //elenxos trapeziwn ews 20 trapezia gia kathe imerominia
     
     $sql = "SELECT SUM(num_tables) FROM reservation WHERE r_date='$date' AND time_zone='$time'";
-    $result = $dbconnect->query($sql);
+    $result=mysqli_query($dbconnect,$sql);
     if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $current_tables=$row["SUM(num_tables)"];
     }
     }
     if($current_tables + $tables > $a_tables){
-        header("Location: ../reservation.php?error3=full");
+        echo '<h5 class="bg-danger text-center">Reservations are full this date and timezone, Please try again!</h5>';
     }
           
            
@@ -88,7 +94,7 @@ if(isset($_POST['reserv-submit'])) {
                     exit();
                 }
                 else {       
-                    mysqli_stmt_bind_param($stmt, "sssssssss", $fname, $lname, $guests, $tables, $date, $time, $tele, $comments, $user);
+                    mysqli_stmt_bind_param($stmt, "sssssssss", $fname, $lname, $guests, $tables, $date, $time, $tele, $comments);
                     mysqli_stmt_execute($stmt);
                     header("Location: ../reservation.php?reservation=success");
                     exit();
@@ -99,6 +105,5 @@ if(isset($_POST['reserv-submit'])) {
    mysqli_stmt_close($stmt);
    mysqli_close($dbconnect);
 }
+?>
     
-
-
