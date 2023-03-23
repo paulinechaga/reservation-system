@@ -1,6 +1,5 @@
 <?php
-include('base.php');
-session_start();
+require("../base.php");
 
 //between function.. elenxei an oi xaraktires einai mesa sta oria p thetoume
 function between($val, $x, $y){
@@ -59,7 +58,7 @@ if(isset($_POST['reserv-submit'])) {
     }
     
     else{
-     //checkarw ta available trapezia ana mera   
+     
     $sql = "SELECT t_tables FROM tables WHERE t_date='$date'";
     $result=mysqli_query($dbconnect,$sql);
     if ($result->num_rows > 0) {
@@ -67,12 +66,9 @@ if(isset($_POST['reserv-submit'])) {
         $a_tables=$row["t_tables"];
     }
     }
-    else{$a_tables=20;} //default timi
-        
-        
-    //elenxos trapeziwn ews 20 trapezia gia kathe imerominia
+    else{$a_tables=20;} 
     
-    $sql = "SELECT SUM(num_tables) FROM reservation WHERE r_date='$date' AND time_zone='$time'";
+    $sql = "SELECT SUM(num_tables) FROM book WHERE r_date='$date' AND time_zone='$time'";
     $result=mysqli_query($dbconnect,$sql);
     if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
@@ -87,23 +83,18 @@ if(isset($_POST['reserv-submit'])) {
     
     else {
     
-         $sql = "INSERT INTO book(f_name, l_name, num_guests, num_tables, rdate, time_zone, telephone, comment, user_fk) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = mysqli_stmt_init($dbconnect);
-                 if(!mysqli_stmt_prepare($stmt, $sql)){
-                    header("Location: ../reservation.php?error3=sqlerror1");
+         $sql = "INSERT INTO book(firstname,surname, num_guests, num_tables, r_date, time_zone,phonenumber, comment) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt =mysqli_prepare($dbconnect, $sql);   
+            mysqli_stmt_bind_param($stmt, "ssssssss", $fname, $lname, $guests,$tables, $date, $time, $tele, $comments);
+            mysqli_stmt_execute($stmt);
+              header("Location: ../reservation.php?reservation=success");
                     exit();
                 }
-                else {       
-                    mysqli_stmt_bind_param($stmt, "sssssssss", $fname, $lname, $guests, $tables, $date, $time, $tele, $comments);
-                    mysqli_stmt_execute($stmt);
-                    header("Location: ../reservation.php?reservation=success");
-                    exit();
-                }
-        }
-    }
-    
+        
+            } 
+       
+
    mysqli_stmt_close($stmt);
    mysqli_close($dbconnect);
 }
 ?>
-    
