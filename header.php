@@ -56,7 +56,7 @@
                     
                     <?php
                     //set navigation bar when logged in
-                    if(isset($_SESSION['user_id'])){ echo'
+                    if(isset($_SESSION['firstname'])){ echo'
                     <li class="nav-item">
                         <a class="nav-link" href="reservation.php" >New Reservation</a>
                     </li>
@@ -65,21 +65,22 @@
                     </li>';
                     
                     //set navigation bar when logged in and role of admin
-                    if($_SESSION['role']==2) {   
-                    echo'
-                    <li class="nav-item">
-                        <a class="nav-link" href="schedule.php" >Edit Schedule</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="tables.php" >Edit Tables</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="view_tables.php" >View Tables</a>
-                    </li>';    
-                    }
-                    }
-                    //main page not logged in navigation bar
-                    else { echo'
+                    // if($role==1) {   
+                    // echo'
+                    // <li class="nav-item">
+                    //     <a class="nav-link" href="schedule.php" >Edit Schedule</a>
+                    // </li>
+                    // <li class="nav-item">
+                    //     <a class="nav-link" href="tables.php" >Edit Tables</a>
+                    // </li>
+                    // <li class="nav-item">
+                    //     <a class="nav-link" href="view_tables.php" >View Tables</a>
+                    // </li>';    
+                    // }
+                    // }
+                    // //main page not logged in navigation bar
+                    // else {
+                       echo'
                     <li class="nav-item">
 	                 <a class="nav-link" href="#aboutus">About Us</a>
 	             </li>
@@ -92,16 +93,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#footer">Contact Us</a>
                     </li>
-                    '; } 
+                    '; }
                     ?>
                     
                 </ul>
                 
                     <?php
                     //log out button when user is logged in
-                    if(isset($_SESSION['id'])){
+                    if(isset($_SESSION['firstname'])){
                     echo '
-                    <form class="navbar-form navbar-right" action="includes/logout.inc.php" method="post">
+                    <form class="navbar-form navbar-right" action="login.php" method="post">
                     <button type="submit" name="logout-submit" class="btn btn-outline-dark">Logout</button>
                     </form>';
                     }

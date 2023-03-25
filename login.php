@@ -24,8 +24,9 @@
       $_SESSION['phonenumber']=$user['phonenumber'];
       $_SESSION['email']=$user['email'];
       $_SESSION['password']=$user['password'];
+      $_SESSION['role']=$user['role_id'];
       
-    
+
      //redirect user to the home page
      header('Location:index.php');
 

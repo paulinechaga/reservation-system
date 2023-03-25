@@ -7,8 +7,8 @@ require "header.php";
 <h3 class="text-center"><br>View Reservations<br></h3>     
 
 <?php
-    if(isset($_SESSION['user_id'])){
-        echo '<p class="text-white bg-dark text-center">'. $_SESSION['username'] .', Here you can check your reservation history</p><br>';
+    if(isset($_SESSION['firstname'])){
+        echo '<p class="text-white bg-dark text-center">'. $_SESSION['firstname'] .', Here you can check your reservation history</p><br>';
         
     
     if(isset($_GET['delete'])){

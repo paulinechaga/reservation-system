@@ -5,7 +5,7 @@
 
 if(isset($_POST['delete-submit'])) {
  
- require 'base.php';
+ require ("../base.php");
  
  $reservation_id = $_POST['reserv_id'];
     
@@ -24,7 +24,7 @@ if (mysqli_query($dbconnect, $sql)) {
 
 if(isset($_POST['delete-table'])) {
  
- require 'base.php';
+ //require 'base.php';
  
  $tables_id = $_POST['tables_id'];
     
